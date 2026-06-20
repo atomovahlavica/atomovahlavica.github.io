@@ -1,0 +1,408 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+.W{position:relative;border-radius:12px;overflow:hidden;font-family:'EB Garamond',serif;color:#1A1A1A;background-image:url('data:image/jpeg;base64,PLACEHOLDER_BG');background-size:cover;background-position:center 30%;}
+.Wover{position:relative;background:rgba(244,241,232,0.88);padding:1.25rem;z-index:1;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+h1{font-size:24px;font-weight:400;color:#161616;line-height:1.2;}
+h2{font-size:17px;font-weight:600;color:#161616;margin-bottom:.6rem;font-family:'Inter',sans-serif;}
+h3{font-size:14px;font-weight:600;color:#222;margin-bottom:.4rem;font-family:'Inter',sans-serif;}
+p{line-height:1.65;}
+.eyebrow{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6B6B6B;font-family:'Inter',sans-serif;margin-bottom:3px;}
+.sub{font-size:13px;color:#444;font-family:'Inter',sans-serif;line-height:1.55;}
+.divider{height:1px;background:#D8D2C0;margin:10px 0;}
+.card{background:rgba(255,253,247,0.92);border:1px solid #D8D2C0;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:8px;}
+.card-accent{border-left:3px solid #2E5E3A;}
+.btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;background:#1A1A1A;border:1px solid #1A1A1A;border-radius:7px;color:#F4F1E8;padding:7px 14px;cursor:pointer;}
+.btn:hover{background:#333;}
+.btn:disabled{background:#D8D2C0;border-color:#D8D2C0;color:#8A8A8A;cursor:default;}
+.sbar{display:flex;align-items:center;gap:9px;padding:5px 0 10px;border-bottom:1px solid #D8D2C0;margin-bottom:.9rem;}
+.sbtn{background:rgba(255,253,247,0.92);border:1px solid #1A1A1A;border-radius:7px;color:#1A1A1A;font-size:12px;font-family:'Inter',sans-serif;padding:4px 11px;cursor:pointer;}
+.trust-bar-wrap{margin-bottom:.9rem;}
+.trust-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+.trust-track{height:6px;background:#D8D2C0;border-radius:3px;overflow:hidden;}
+.trust-fill{height:100%;background:#2E5E3A;border-radius:3px;transition:width .4s;}
+.trust-fill.low{background:#A8472E;}
+.trust-fill.mid{background:#A87D2E;}
+.phase-nav{display:flex;gap:3px;margin-bottom:1rem;flex-wrap:wrap;}
+.pnb{font-family:'Inter',sans-serif;font-size:11px;background:none;border:1px solid #C8C2B0;border-radius:5px;color:#9A9486;padding:4px 8px;cursor:default;}
+.pnb.done{border-color:#2E5E3A;color:#2E5E3A;}
+.pnb.active{border-color:#A87D2E;color:#A87D2E;font-weight:600;cursor:default;}
+.toast{position:absolute;top:8px;right:8px;background:#EAF3EA;border:1px solid #2E5E3A;border-radius:7px;padding:5px 11px;font-size:12px;font-family:'Inter',sans-serif;color:#2E5E3A;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99;max-width:220px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.toast.neg{background:#FAEAE5;border-color:#A8472E;color:#A8472E;}
+.toast.show{opacity:1;}
+.src-quote{font-size:14px;line-height:1.75;font-style:italic;color:#222;border-left:2px solid #C8C2B0;padding-left:10px;margin:6px 0;}
+.tag{display:inline-block;font-size:10px;font-family:'Inter',sans-serif;padding:2px 7px;border-radius:4px;margin-right:4px;}
+.tag-bias{background:#F5E0D5;color:#A8472E;}
+.tag-gap{background:#DCE5F0;color:#3A5A8F;}
+.tag-auth{background:#DCEEDC;color:#2E5E3A;}
+.art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px;margin:.6rem 0;}
+.art-card{background:rgba(255,253,247,0.92);border:1px solid #D8D2C0;border-radius:8px;padding:.6rem .8rem;cursor:pointer;transition:border-color .15s;}
+.art-card:hover{border-color:#2E5E3A;}
+.art-card.sel{border-color:#2E5E3A;background:#EAF3EA;}
+.art-icon{font-size:18px;color:#9A9486;margin-bottom:3px;}
+.art-card.sel .art-icon{color:#2E5E3A;}
+.art-name{font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#222;line-height:1.4;}
+.art-meta{font-size:10px;font-family:'Inter',sans-serif;color:#6B6B6B;margin-top:2px;}
+.art-detail{font-size:11px;font-family:'EB Garamond',serif;font-style:italic;color:#555;margin-top:4px;line-height:1.4;}
+.frag{border-radius:5px;cursor:pointer;border:2px solid #D8D2C0;overflow:hidden;aspect-ratio:1;position:relative;transition:border-color .15s,transform .1s;}
+.frag:hover{border-color:#A87D2E;}
+.frag.selected-piece{border-color:#A87D2E;box-shadow:0 0 0 2px rgba(168,125,46,.3);transform:scale(1.03);}
+.pz-slot{border-radius:5px;border:1px dashed #C8C2B0;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:1;}
+.pz-slot.filled{border-color:#2E5E3A;border-style:solid;cursor:default;}
+.frag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+.conf-slider{width:100%;accent-color:#2E5E3A;}
+.exhibit-option{border:1px solid #D8D2C0;border-radius:8px;padding:.8rem;margin-bottom:6px;cursor:pointer;transition:border-color .15s;background:rgba(255,253,247,0.7);}
+.exhibit-option:hover{border-color:#2E5E3A;}
+.exhibit-option.chosen{border-color:#2E5E3A;background:#EAF3EA;}
+.visitor-card{background:rgba(255,253,247,0.92);border:1px solid #D8D2C0;border-radius:8px;padding:.7rem .9rem;margin-bottom:6px;}
+.review-pos{border-left:2px solid #2E5E3A;}
+.review-neg{border-left:2px solid #A8472E;}
+.review-neu{border-left:2px solid #A87D2E;}
+textarea{width:100%;font-family:'EB Garamond',serif;font-size:14px;background:rgba(255,253,247,0.95);border:1px solid #D8D2C0;border-radius:7px;color:#1A1A1A;padding:8px;resize:vertical;}
+textarea::placeholder{color:#9A9486;}
+input[type=text]{width:100%;font-family:'EB Garamond',serif;font-size:14px;background:rgba(255,253,247,0.95);border:1px solid #D8D2C0;border-radius:7px;color:#1A1A1A;padding:7px 9px;}
+input[type=text]::placeholder{color:#9A9486;}
+input[type=text].err{border-color:#A8472E;}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:7px;margin:.6rem 0;}
+.badge{background:rgba(255,253,247,0.95);border:1px solid #D8D2C0;border-radius:8px;padding:.6rem;text-align:center;}
+.badge.earned{border-color:#2E5E3A;background:#EAF3EA;}
+.badge i{font-size:20px;color:#C8C2B0;display:block;margin-bottom:3px;}
+.badge.earned i{color:#2E5E3A;}
+.badge-name{font-size:11px;font-family:'Inter',sans-serif;color:#9A9486;}
+.badge.earned .badge-name{color:#2E5E3A;}
+.title-card{background:linear-gradient(135deg,#EAF3EA,#F4F1E8);border:2px solid #2E5E3A;border-radius:12px;padding:1.3rem;text-align:center;margin-bottom:1rem;}
+.title-name{font-family:'EB Garamond',serif;font-size:28px;font-weight:500;color:#2E5E3A;margin:6px 0 4px;}
+.sketch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:.7rem 0;}
+.sketch-card{background:rgba(255,253,247,0.95);border:1px solid #D8D2C0;border-radius:8px;padding:.7rem;text-align:center;}
+.sketch-svg{width:100%;height:70px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+</style>
+
+<div class="W" id="game-root">
+<div class="Wover">
+<h2 class="sr-only">Bloody Sunday 1972 — a nine-phase museum curation game with research, investigation, a real jigsaw photograph puzzle, narrative building across 25 artifacts, curation, source reliability rating, a visualization of your chosen artifacts, opening day, and a new evidence phase. Public trust rises when you are careful and honest and falls when you sensationalise. You earn a final curator title based on your choices.</h2>
+<div class="toast" id="toast"></div>
+
+<div class="sbar">
+  <button class="sbtn" id="snd-btn" aria-label="Toggle ambient music"><i class="ti ti-player-play" id="snd-icon" aria-hidden="true"></i></button>
+  <span style="font-size:11px;color:#6B6B6B;font-family:'Inter',sans-serif;" id="slabel">Folk air — click to play</span>
+</div>
+
+<div style="border-left:3px solid #2E5E3A;padding-left:10px;margin-bottom:.9rem;">
+  <p class="eyebrow">Museum curation game — Derry, 1972</p>
+  <h1>Bloody Sunday</h1>
+  <p class="sub" style="padding-left:0;margin-top:3px;">You are a museum curator tasked with building an exhibition about 30 January 1972. Your public trust score rises when you are careful and honest — and falls when you sensationalise or hide uncertainty.</p>
+</div>
+
+<div class="trust-bar-wrap">
+  <div class="trust-label">
+    <span style="font-size:12px;font-family:'Inter',sans-serif;color:#6B6B6B;">Public trust</span>
+    <span style="font-size:13px;font-family:'Inter',sans-serif;font-weight:600;color:#1A1A1A;" id="trust-num">50 / 100</span>
+  </div>
+  <div class="trust-track"><div class="trust-fill mid" id="trust-fill" style="width:50%;"></div></div>
+</div>
+
+<div class="phase-nav" id="phase-nav" role="tablist"></div>
+<div id="phase-content"></div>
+</div>
+</div>
+
+<script>
+const BG_B64 = "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";
+const PUZZLE_B64 = "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";
+
+const PHASES=['Research','Investigation','Photograph','Narrative','Curation','Sources','Choices','Opening day','New evidence'];
+let currentPhase=0;
+const phasesDone=new Set();
+let trust=50;
+
+document.getElementById('game-root').style.backgroundImage="url('data:image/jpeg;base64,"+BG_B64+"')";
+
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+let toastTimer=null;
+function showToast(msg,neg=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(neg?' neg':'');
+  if(toastTimer)clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+function changeTrust(delta,reason){
+  trust=clamp(trust+delta,0,100);
+  document.getElementById('trust-num').textContent=Math.round(trust)+' / 100';
+  const fill=document.getElementById('trust-fill');
+  fill.style.width=trust+'%';
+  fill.className='trust-fill'+(trust>=65?' ':trust>=40?' mid ':' low ');
+  if(delta>0)showToast('+'+delta+' trust — '+reason);
+  else if(delta<0)showToast(delta+' trust — '+reason,true);
+}
+
+function renderPhaseNav(){
+  const nav=document.getElementById('phase-nav');
+  nav.innerHTML=PHASES.map((p,i)=>{
+    const cls=i===currentPhase?'pnb active':phasesDone.has(i)?'pnb done':'pnb';
+    return `<button class="${cls}" data-ph="${i}">${i+1}. ${p}</button>`;
+  }).join('');
+  nav.querySelectorAll('.pnb.done').forEach(b=>{
+    b.style.cursor='pointer';
+    b.addEventListener('click',()=>{currentPhase=parseInt(b.dataset.ph);renderPhase();});
+  });
+}
+
+const SOURCES_DATA=[
+  {id:'soldier',label:'Soldier testimony',color:'#2E5E3A',quote:'We came under fire from the direction of the Rossville flats. I engaged targets I positively identified as nail-bombers and gunmen. We did not fire at civilians.',bias:'Self-exculpatory; contradicted by forensic evidence and the Saville Report.',gap:'Cannot account for victims shot in the back or while fleeing.',reliability:30},
+  {id:'protester',label:'Protester testimony',color:'#3A5A8F',quote:'There was no warning. The paratroopers came around the corner and opened fire into the crowd. Nobody near me had any weapon. People were screaming and running.',bias:'Direct participant; emotionally credible but limited vantage point.',gap:'Could only see what was immediately around her.',reliability:70},
+  {id:'journalist',label:'Journalist notes',color:'#A8472E',quote:'I was positioned on a rooftop on Rossville Street. I observed no incoming fire before the paratroopers advanced. I saw at least three people fall who were not near any barricade.',bias:'Professional observer but working for a London paper with editorial pressures.',gap:'Rooftop position meant limited ground-level detail.',reliability:65},
+  {id:'forensic',label:'Forensic evidence',color:'#6B4E8F',quote:'Ballistic analysis confirms all bullets recovered from victims were fired from army-issue L1A1 rifles. Residue tests on thirteen of the fourteen victims were negative for firearms discharge.',bias:'Scientific evidence is most objective but interpretation can still be contested.',gap:'Residue tests of the era were less reliable than modern methods.',reliability:85},
+  {id:'photo_ev',label:'Photographic evidence',color:'#A87D2E',quote:'Press photographs show Fr Edward Daly waving a white handkerchief as civilians carried a wounded Jackie Duddy. Other frames show victims lying in open ground, no weapons visible.',bias:'Camera angle and selection determine what is captured; photographers chose what to photograph.',gap:'No photograph captures the moment of each individual shot.',reliability:78}
+];
+
+const ARTIFACTS=[
+  {id:'placard',name:'Civil rights placard',icon:'ti-flag',meta:'NICRA march, Jan 1972',detail:'Hand-painted on cardboard, carried by a marching teacher from the Bogside. Its slogan demanded equal voting rights and an end to gerrymandering.',narrative:{A:8,B:4,C:5}},
+  {id:'hanky',name:'Bloodstained handkerchief',icon:'ti-heart',meta:'Fr Daly — white flag',detail:'The handkerchief Fr Edward Daly waved while helping carry the mortally wounded Jackie Duddy from the line of fire. A stain remains in one corner.',narrative:{A:9,B:5,C:7}},
+  {id:'helmet',name:'British Army helmet',icon:'ti-shield',meta:'1 PARA, Bogside 1972',detail:'Standard-issue paratrooper helmet recovered from the operational area. Its presence in an exhibit immediately signals military force to a visitor.',narrative:{A:2,B:9,C:6}},
+  {id:'saville',name:'Saville Report 2010',icon:'ti-file-certificate',meta:'Official inquiry findings',detail:'A 5,000-page report, twelve years in the making, that concluded the killings were unjustified. The most authoritative single document in the case.',narrative:{A:6,B:5,C:9}},
+  {id:'radio',name:'Radio recordings',icon:'ti-radio',meta:'BBC NI broadcast, 30 Jan',detail:'Live coverage recorded as the march set off, cut short mid-sentence when gunfire broke out nearby. The tape captures real-time confusion.',narrative:{A:7,B:6,C:8}},
+  {id:'mural',name:'Mural sketches',icon:'ti-brush',meta:'Bogside Artists, 1970s',detail:'Preliminary pencil studies for the famous Bogside murals, drawn by local artists who lived through the events they later painted.',narrative:{A:6,B:7,C:5}},
+  {id:'banner',name:'Protest banner',icon:'ti-pennant',meta:'"Civil Rights for All"',detail:'A cloth banner stitched by the Derry Housing Action Committee, carried at the front of several 1971-72 marches before this one.',narrative:{A:9,B:4,C:5}},
+  {id:'telegraph',name:'Daily Telegraph, 31 Jan',icon:'ti-news',meta:'London — pro-army framing',detail:'Front-page coverage relying entirely on Ministry of Defence briefings, with no quotes from any Bogside resident or marcher.',narrative:{A:3,B:7,C:9}},
+  {id:'irishpress',name:'Irish Press, 31 Jan',icon:'ti-news',meta:'Dublin — pro-nationalist framing',detail:'A Dublin paper that ran witness accounts from the Bogside within hours, sharply contradicting the British army version.',narrative:{A:7,B:6,C:8}},
+  {id:'widgery',name:'Widgery Tribunal 1972',icon:'ti-gavel',meta:'First inquiry — discredited',detail:'Completed in just eleven weeks and later condemned as a whitewash; Lord Widgery had been briefed by the Prime Minister beforehand.',narrative:{A:2,B:6,C:9}},
+  {id:'cartridge',name:'Army bullet casings',icon:'ti-circle-dot',meta:'Recovered from Rossville St',detail:'Spent cartridges later matched by forensic analysis to specific soldiers, central evidence in the Saville Inquiry decades later.',narrative:{A:4,B:8,C:7}},
+  {id:'daly_photo',name:'Fr Daly photograph',icon:'ti-camera',meta:'White handkerchief image',detail:'The single most reproduced image of the day, taken by a press photographer who happened to be steps away from Fr Daly.',narrative:{A:9,B:6,C:7}},
+  {id:'victims',name:'Victim identity cards',icon:'ti-id',meta:'14 deceased, ages 17–59',detail:'Identity documents belonging to the fourteen men killed, ranging in age from seventeen to fifty-nine, none of them found armed.',narrative:{A:9,B:5,C:8}},
+  {id:'letter',name:'Margaret Duddy\'s letter',icon:'ti-mail',meta:'Jackie Duddy\'s aunt, Feb 1972',detail:'A handwritten letter sent to a sister days after the funeral, describing grief and disbelief rather than political analysis.',narrative:{A:8,B:4,C:7}},
+  {id:'map',name:'Rossville St map',icon:'ti-map',meta:'Annotated military positions',detail:'A hand-drawn tactical map used during the Saville Inquiry to plot the position of every soldier and every recovered shell casing.',narrative:{A:5,B:8,C:7}},
+  {id:'bogside',name:'Bogside mural panel',icon:'ti-photo',meta:'Free Derry Corner artwork',detail:'A panel from the mural trail that now lines the route of the march, painted decades after the event as an act of public memory.',narrative:{A:7,B:6,C:6}},
+  {id:'army_log',name:'Army operations log',icon:'ti-clipboard',meta:'1 PARA internal record',detail:'The battalion\'s own logbook for the day, written for internal record-keeping rather than public consumption.',narrative:{A:3,B:8,C:9}},
+  {id:'first_aid',name:'First aid post register',icon:'ti-first-aid-kit',meta:'Casualty list, 30 Jan 1972',detail:'A handwritten register kept by volunteer medics treating the wounded as the shooting was still happening nearby.',narrative:{A:8,B:5,C:7}},
+  {id:'inquiry_photo',name:'Inquiry crime scene photos',icon:'ti-camera-minus',meta:'Police forensic images 1972',detail:'Forensic photographs taken in the immediate aftermath, used later by Saville investigators to reconstruct trajectories.',narrative:{A:5,B:7,C:9}},
+  {id:'family_oral',name:'Family oral histories',icon:'ti-microphone-2',meta:'Recorded 1995–2010',detail:'Decades of recorded interviews with surviving relatives, gathered as part of the long campaign for a fresh inquiry.',narrative:{A:8,B:5,C:7}},
+  {id:'amnesty',name:'Amnesty International report',icon:'ti-world',meta:'Published March 1972',detail:'An early independent human rights assessment, published just weeks after the killings, calling for an impartial inquiry.',narrative:{A:7,B:5,C:8}},
+  {id:'song',name:'Bloody Sunday — song sheet',icon:'ti-music',meta:'U2, 1983 — cultural memory',detail:'A handwritten lyric sheet showing how the event entered global popular memory more than a decade after it happened.',narrative:{A:6,B:5,C:7}},
+  {id:'commons',name:'House of Commons Hansard',icon:'ti-building-arch',meta:'Debate, 1 Feb 1972',detail:'The official transcript of a heated parliamentary debate held two days after the shootings, exposing deep political division.',narrative:{A:4,B:7,C:9}},
+  {id:'torn_photo',name:'Torn photograph (restored)',icon:'ti-photo-scan',meta:'Free Derry Corner, c.1972',detail:'The photograph you personally reassembled earlier in this investigation, now ready for display in your own exhibition.',narrative:{A:7,B:6,C:8}},
+  {id:'timeline_doc',name:'Reconstructed timeline',icon:'ti-clock',meta:'Your research notes',detail:'Your own working timeline, built from the claims you judged most credible across all five primary sources.',narrative:{A:6,B:6,C:9}}
+];
+
+const EXHIBIT_OUTCOMES={
+  A:{name:'Exhibition A',sub:'A peaceful protest turns tragic',desc:'Visitors leave with a clear sense of innocence and injustice. This is a powerful moral statement — but some critics will say it simplifies a complex political situation.',reviews:[{type:'pos',who:'Irish Times',text:'A dignified and necessary exhibition. The victims are finally honoured as they deserved.'},{type:'neg',who:'Daily Telegraph',text:'The exhibition presents only one interpretation and ignores the security context entirely.'},{type:'neu',who:'Guardian',text:'Moving, though the complexity of the political moment is sometimes flattened for emotional effect.'}]},
+  B:{name:'Exhibition B',sub:'A divided society spirals into violence',desc:'Visitors leave with a sense of historical tragedy but also unease. Some nationalist visitors feel the exhibition implies shared responsibility.',reviews:[{type:'neu',who:'BBC News',text:'A thoughtful attempt at balance, though it may satisfy nobody fully.'},{type:'neg',who:'Derry Journal',text:'To present this as mutual descent into violence risks legitimising what the Saville Report called unjustified and unjustifiable.'},{type:'pos',who:'Times Literary Supplement',text:'The most historiographically honest approach on offer.'}]},
+  C:{name:'Exhibition C',sub:'Competing truths and decades of controversy',desc:'Visitors leave uncertain but more informed about how history is made. Critics praise nuance; some families feel closure is denied.',reviews:[{type:'pos',who:'Museum Journal',text:'Exemplary in showing how archival practice shapes collective memory.'},{type:'neu',who:'Irish News',text:'The families have waited fifty years. Is an exhibition about uncertainty what they needed?'},{type:'pos',who:'Guardian',text:'Intellectually ambitious and ethically serious. A model for contested heritage.'}]}
+};
+
+const gameState={readSources:new Set(),resolvedContradictions:new Set(),puzzlePlaced:{},puzzleAnswered:false,selectedArtifacts:new Set(),narrativeChoice:null,captions:{},confScores:{},newEvidenceChoice:null};
+
+let fragOrder=[0,1,2,3,4,5,6,7,8];
+for(let i=fragOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[fragOrder[i],fragOrder[j]]=[fragOrder[j],fragOrder[i]];}
+let pzSelected=null;
+
+function renderPhase(){
+  renderPhaseNav();
+  const el=document.getElementById('phase-content');
+  const fns=[renderResearch,renderInvestigation,renderPuzzle,renderNarrative,renderCuration,renderSources,renderChoices,renderOpening,renderNewEvidence];
+  el.innerHTML='';
+  fns[currentPhase]();
+}
+function nextPhase(){phasesDone.add(currentPhase);currentPhase=Math.min(currentPhase+1,8);renderPhase();}
+
+function renderResearch(){
+  const el=document.getElementById('phase-content');
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 1 — Research</p><h2>Read the sources</h2><p class="sub">Read each account carefully. Open the analysis to authenticate it — and earn trust for acknowledging bias and uncertainty.</p></div>
+  ${SOURCES_DATA.map(s=>`<div class="card" style="border-left:3px solid ${s.color};"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;"><h3>${s.label}</h3>${gameState.readSources.has(s.id)?'<span class="tag tag-auth">Read</span>':''}</div><p class="src-quote">${s.quote}</p><details class="src-det" data-id="${s.id}"><summary style="cursor:pointer;font-size:12px;color:#6B6B6B;font-family:'Inter',sans-serif;">Authenticate this source</summary><div style="margin-top:7px;"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;margin-bottom:5px;"><span class="tag tag-bias">Bias</span>${s.bias}</p><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;margin-bottom:5px;"><span class="tag tag-gap">Gaps</span>${s.gap}</p><p style="font-size:13px;font-family:'Inter',sans-serif;color:#2E5E3A;">Estimated reliability: ${s.reliability}%</p></div></details></div>`).join('')}
+  <div class="divider"></div><div style="display:flex;justify-content:space-between;align-items:center;"><p class="sub">${gameState.readSources.size} of 5 sources authenticated</p><button class="btn" id="next-1" ${gameState.readSources.size<3?'disabled':''}>Proceed to investigation ↗</button></div>`;
+  el.querySelectorAll('.src-det').forEach(d=>{d.addEventListener('toggle',()=>{if(d.open){const id=d.dataset.id;if(!gameState.readSources.has(id)){gameState.readSources.add(id);changeTrust(5,'Authenticated a source carefully');if(gameState.readSources.size===5)changeTrust(10,'Read all five sources — full research');renderResearch();}}});});
+  const nb=el.querySelector('#next-1');if(nb)nb.addEventListener('click',nextPhase);
+}
+
+const CONTRADICTIONS=[
+  {id:'c1',a:'Soldier testimony: "We came under fire first."',b:'Forensic evidence: Residue tests on 13 of 14 victims were negative.',question:'How do you resolve this contradiction?',options:[{t:'Accept soldier account — residue tests were unreliable in 1972.',trust:-5,note:'Dismisses more objective evidence in favour of self-interested testimony.'},{t:'Accept forensic evidence — soldiers were not under fire from victims.',trust:8,note:'Aligns with Saville Report and later forensic review.'},{t:'Note the contradiction and flag both in the exhibition.',trust:12,note:'Acknowledges uncertainty honestly — highest curatorial standard.'}]},
+  {id:'c2',a:'Army log: "Nail bomb thrown at 16:10."',b:'Journalist notes: "I observed no incoming fire before paratroopers advanced."',question:'A journalist on a rooftop saw no incoming fire. The army log records a nail bomb. How do you proceed?',options:[{t:'Trust the army log — it is an official document.',trust:-3,note:'Official documents reflect official interests; the Widgery Tribunal accepted this uncritically.'},{t:'Trust the journalist — an independent eyewitness is more reliable here.',trust:7,note:'Corroborated by photographic evidence and other witnesses.'},{t:'Present both and note the journalist had a better vantage point.',trust:12,note:'Best practice: use vantage point analysis to weight testimonies.'}]},
+  {id:'c3',a:'Protester testimony: "No warning was given."',b:'Army doctrine: soldiers are required to give a verbal warning before firing.',question:'Procedure required a warning. No civilian heard one. What do you note in the exhibition?',options:[{t:'Assume the warning was given but not heard in the chaos.',trust:-4,note:'Speculates in favour of the army without evidence — misleads visitors.'},{t:'Note that no civilian or journalist corroborates a warning being given.',trust:10,note:'Honest representation of the evidence base.'},{t:'Investigate whether the Yellow Card was followed and exhibit the conclusion.',trust:14,note:'Shows your work — visitors can assess the reasoning.'}]}
+];
+
+function renderInvestigation(){
+  const el=document.getElementById('phase-content');
+  const remaining=CONTRADICTIONS.filter(c=>!gameState.resolvedContradictions.has(c.id));
+  const done=remaining.length===0;
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 2 — Investigation</p><h2>Resolve the contradictions</h2><p class="sub">Three major contradictions exist between your sources. Choose how to handle each one.</p></div>
+  ${done?`<div class="card" style="border-color:#2E5E3A;"><p style="font-size:14px;font-family:'Inter',sans-serif;color:#2E5E3A;">All three contradictions resolved.</p></div>`
+  :remaining.map(c=>`<div class="card"><h3>Contradiction</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:.5rem 0;"><div class="card" style="border-color:#A8472E;padding:.6rem;"><p style="font-size:12px;font-family:'Inter',sans-serif;color:#A8472E;margin-bottom:3px;">Source A</p><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;">${c.a}</p></div><div class="card" style="border-color:#3A5A8F;padding:.6rem;"><p style="font-size:12px;font-family:'Inter',sans-serif;color:#3A5A8F;margin-bottom:3px;">Source B</p><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;">${c.b}</p></div></div><p style="font-size:13px;font-family:'Inter',sans-serif;color:#444;margin:.5rem 0;">${c.question}</p>${c.options.map((o,oi)=>`<div class="exhibit-option" data-cid="${c.id}" data-oi="${oi}" style="margin-bottom:5px;"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;">${o.t}</p></div>`).join('')}</div>`).join('')}
+  <div class="divider"></div><button class="btn" id="next-2" ${!done?'disabled':''}>Proceed to photograph ↗</button>`;
+  el.querySelectorAll('.exhibit-option[data-cid]').forEach(opt=>{opt.addEventListener('click',()=>{const cid=opt.dataset.cid;const oi=parseInt(opt.dataset.oi);const c=CONTRADICTIONS.find(x=>x.id===cid);const o=c.options[oi];gameState.resolvedContradictions.add(cid);changeTrust(o.trust,o.note);renderInvestigation();});});
+  const nb=el.querySelector('#next-2');if(nb)nb.addEventListener('click',nextPhase);
+}
+
+function renderPuzzle(){
+  const el=document.getElementById('phase-content');
+  const placedCount=Object.keys(gameState.puzzlePlaced).length;
+  const allPlaced=placedCount===9;
+  const done=allPlaced&&gameState.puzzleAnswered;
+  const remainingFrags=fragOrder.filter(fid=>!Object.values(gameState.puzzlePlaced).includes(fid));
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 3 — Destroyed artifact</p><h2>Restore the photograph</h2><p class="sub">A photograph from the Bogside has been torn into nine scattered pieces. Click a fragment, then click the slot where you think it belongs.</p></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">
+    <div><p style="font-size:11px;color:#6B6B6B;font-family:'Inter',sans-serif;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Fragments (${remainingFrags.length} remaining)</p>
+    <div class="frag-grid">${remainingFrags.map(fid=>{const col=fid%3,row=Math.floor(fid/3);return `<div class="frag ${pzSelected===fid?'selected-piece':''}" data-fid="${fid}" style="background-image:url('data:image/jpeg;base64,${PUZZLE_B64}');background-size:300% 300%;background-position:${col*50}% ${row*50}%;"></div>`;}).join('')}</div>
+    ${remainingFrags.length===0?'<p style="font-size:12px;font-family:\'Inter\',sans-serif;color:#2E5E3A;margin-top:6px;">All fragments placed.</p>':''}</div>
+    <div><p style="font-size:11px;color:#6B6B6B;font-family:'Inter',sans-serif;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Frame</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:100%;aspect-ratio:1;background:#D8D2C0;border-radius:6px;overflow:hidden;border:1px solid #D8D2C0;">
+    ${Array.from({length:9},(_,slot)=>{const placedFid=gameState.puzzlePlaced[slot];const isPlaced=placedFid!==undefined;let bgStyle='background:#EDE8D8;';if(isPlaced){const col=placedFid%3,row=Math.floor(placedFid/3);bgStyle=`background-image:url('data:image/jpeg;base64,${PUZZLE_B64}');background-size:300% 300%;background-position:${col*50}% ${row*50}%;`;}return `<div class="pz-slot ${isPlaced?'filled':''}" data-slot="${slot}" style="${bgStyle}">${!isPlaced?'<i class="ti ti-plus" style="font-size:14px;color:#B8B2A0;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);" aria-hidden="true"></i>':''}</div>`;}).join('')}
+    </div></div>
+  </div>
+  ${allPlaced&&!gameState.puzzleAnswered?`<div class="divider"></div><div class="card"><h3>What is the slogan painted on the wall?</h3><p class="sub" style="margin-bottom:8px;">Type the exact phrase visible in the photograph to proceed.</p><input type="text" id="slogan-input" placeholder="Type the slogan here…" value="${gameState.sloganAnswer||''}"><p id="slogan-err" style="display:none;font-size:12px;color:#A8472E;font-family:'Inter',sans-serif;margin-top:6px;">That's not the exact phrase on the wall. Look again and try once more.</p><button class="btn" id="slogan-btn" style="margin-top:8px;">Submit answer</button></div>`:''}
+  ${done?`<div class="card" style="border-color:#2E5E3A;margin-top:8px;"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#2E5E3A;margin-bottom:4px;">Photograph restored. Slogan correctly recorded: <em>"YOU ARE NOW ENTERING FREE DERRY"</em></p><p class="sub">This image — Free Derry Corner, the gable wall on Lecky Road / Fahan Street — will be available as an artifact in your exhibition.</p></div>`:''}
+  <div class="divider"></div><button class="btn" id="next-3" ${!done?'disabled':''}>Proceed to narrative ↗</button>`;
+  el.querySelectorAll('.frag[data-fid]').forEach(t=>{t.addEventListener('click',()=>{pzSelected=parseInt(t.dataset.fid);renderPuzzle();});});
+  el.querySelectorAll('.pz-slot[data-slot]').forEach(s=>{s.addEventListener('click',()=>{const slot=parseInt(s.dataset.slot);if(pzSelected===null||gameState.puzzlePlaced[slot]!==undefined)return;gameState.puzzlePlaced[slot]=pzSelected;const correct=pzSelected===slot;changeTrust(correct?5:2,correct?'Matched a fragment to its correct position':'Placed a fragment — trial and error is part of restoration');if(Object.keys(gameState.puzzlePlaced).length===9){const allCorrect=Object.entries(gameState.puzzlePlaced).every(([k,v])=>parseInt(k)===v);changeTrust(allCorrect?15:8,allCorrect?'Fully and correctly restored the lost photograph':'Fully restored the photograph');}pzSelected=null;renderPuzzle();});});
+  const si=el.querySelector('#slogan-btn');
+  if(si)si.addEventListener('click',()=>{const input=el.querySelector('#slogan-input');const val=input.value.trim();if(!val)return;const normalized=val.toUpperCase().replace(/[^A-Z\s]/g,'').replace(/\s+/g,' ').trim();const correct=normalized==='YOU ARE NOW ENTERING FREE DERRY';if(correct){gameState.sloganAnswer=val;changeTrust(10,'Accurately transcribed the slogan');gameState.puzzleAnswered=true;renderPuzzle();}else{input.classList.add('err');el.querySelector('#slogan-err').style.display='block';changeTrust(-2,'Transcription did not match the exact wording on the wall');}});
+  const nb=el.querySelector('#next-3');if(nb)nb.addEventListener('click',nextPhase);
+}
+
+function renderNarrative(){
+  const el=document.getElementById('phase-content');
+  const sel=gameState.selectedArtifacts;
+  function getScore(choice){let s=0;sel.forEach(id=>{const a=ARTIFACTS.find(x=>x.id===id);if(a)s+=a.narrative[choice]||0;});return s;}
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 4 — Build the narrative</p><h2>Choose your artifacts</h2><p class="sub">Select up to 12 artifacts. Your choices shape which exhibition narrative emerges. Select at least 6 to see your direction.</p></div>
+  <p style="font-size:11px;color:#6B6B6B;font-family:'Inter',sans-serif;margin-bottom:6px;">${sel.size} of 12 selected</p>
+  <div class="art-grid">${ARTIFACTS.map(a=>`<div class="art-card ${sel.has(a.id)?'sel':''}" data-aid="${a.id}"><i class="ti ${a.icon} art-icon" aria-hidden="true"></i><p class="art-name">${a.name}</p><p class="art-meta">${a.meta}</p><p class="art-detail">${a.detail}</p></div>`).join('')}</div>
+  ${sel.size>=6?`<div class="divider"></div><h3>Your narrative direction</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:.5rem 0;">${['A','B','C'].map(k=>{const s=getScore(k);const o=EXHIBIT_OUTCOMES[k];return `<div class="exhibit-option ${gameState.narrativeChoice===k?'chosen':''}" data-choice="${k}"><p style="font-size:10px;font-family:'Inter',sans-serif;color:#6B6B6B;margin-bottom:2px;">${o.name}</p><p style="font-size:12px;font-family:'Inter',sans-serif;color:#333;margin-bottom:4px;">${o.sub}</p><div style="height:4px;background:#D8D2C0;border-radius:2px;"><div style="height:100%;width:${Math.min(100,s*2)}%;background:#2E5E3A;border-radius:2px;"></div></div><p style="font-size:10px;font-family:'Inter',sans-serif;color:#6B6B6B;margin-top:3px;">Alignment: ${s}</p></div>`;}).join('')}</div><p class="sub" style="margin:.4rem 0;">Click a narrative to commit to it.</p>`:''}
+  <div class="divider"></div><button class="btn" id="next-4" ${!gameState.narrativeChoice?'disabled':''}>Proceed to curation ↗</button>`;
+  el.querySelectorAll('.art-card[data-aid]').forEach(c=>{c.addEventListener('click',()=>{const id=c.dataset.aid;if(sel.has(id)){sel.delete(id);}else if(sel.size<12){sel.add(id);changeTrust(2,'Added a carefully chosen artifact');}else{showToast('Maximum 12 artifacts selected',true);return;}renderNarrative();});});
+  el.querySelectorAll('.exhibit-option[data-choice]').forEach(opt=>{opt.addEventListener('click',()=>{const prev=gameState.narrativeChoice;gameState.narrativeChoice=opt.dataset.choice;if(!prev)changeTrust(8,'Committed to a clear exhibition narrative');renderNarrative();});});
+  const nb=el.querySelector('#next-4');if(nb)nb.addEventListener('click',nextPhase);
+}
+
+function renderCuration(){
+  const el=document.getElementById('phase-content');
+  const selArts=ARTIFACTS.filter(a=>gameState.selectedArtifacts.has(a.id));
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 5 — Curation</p><h2>Write captions and arrange the flow</h2><p class="sub">Write a caption for each artifact. Earn trust for citing your source and acknowledging uncertainty.</p></div>
+  ${selArts.map(a=>`<div class="card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><i class="ti ${a.icon}" style="font-size:16px;color:#6B6B6B;" aria-hidden="true"></i><h3>${a.name}</h3>${gameState.captions[a.id]?'<span class="tag tag-auth" style="margin-left:auto;">Captioned</span>':''}</div><p class="sub" style="margin-bottom:6px;">${a.meta}</p><textarea data-aid="${a.id}" rows="2" placeholder="Write a caption. Cite your source. Note any uncertainty…">${gameState.captions[a.id]||''}</textarea></div>`).join('')}
+  <div class="card" style="margin-top:4px;"><h3>Exhibition wall text</h3><p class="sub" style="margin-bottom:6px;">This is the first thing visitors read.</p><textarea id="wall-text" rows="3" placeholder="On 30 January 1972, in the Bogside area of Derry…">${gameState.wallText||''}</textarea></div>
+  <div class="divider"></div><div style="display:flex;justify-content:space-between;align-items:center;"><p class="sub">${Object.keys(gameState.captions).length} of ${selArts.length} artifacts captioned</p><button class="btn" id="next-5">Proceed to sources review ↗</button></div>`;
+  el.querySelectorAll('textarea[data-aid]').forEach(ta=>{ta.addEventListener('blur',()=>{const prev=gameState.captions[ta.dataset.aid];const val=ta.value.trim();if(val&&!prev){changeTrust(4,'Wrote a careful artifact caption');}if(val&&val.length>60&&val.toLowerCase().includes('source'))changeTrust(3,'Caption cites a source — good practice');gameState.captions[ta.dataset.aid]=val;});});
+  const wt=el.querySelector('#wall-text');if(wt)wt.addEventListener('blur',()=>{if(wt.value.trim()&&!gameState.wallText)changeTrust(6,'Wrote the exhibition wall text');gameState.wallText=wt.value.trim();});
+  const nb=el.querySelector('#next-5');if(nb)nb.addEventListener('click',()=>{if(!gameState.wallText&&el.querySelector('#wall-text'))gameState.wallText=el.querySelector('#wall-text').value.trim();changeTrust(-5,'Moved to sources review — some captions may be incomplete');nextPhase();});
+}
+
+function renderSources(){
+  const el=document.getElementById('phase-content');
+  const all=SOURCES_DATA.every(s=>gameState.confScores[s.id]!==undefined);
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 6 — Contradictory sources</p><h2>Assign confidence scores</h2><p class="sub">Rate each source's reliability from 0 to 100.</p></div>
+  ${SOURCES_DATA.map(s=>`<div class="card" style="border-left:3px solid ${s.color};"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><h3>${s.label}</h3>${gameState.confScores[s.id]!==undefined?`<span class="tag tag-auth">Scored: ${gameState.confScores[s.id]}%</span>`:''}</div><p class="src-quote">${s.quote}</p><p style="font-size:12px;font-family:'Inter',sans-serif;color:#6B6B6B;margin:.4rem 0;">Your confidence score</p><input type="range" min="0" max="100" value="${gameState.confScores[s.id]??s.reliability}" class="conf-slider" data-sid="${s.id}"><div style="display:flex;justify-content:space-between;margin-top:2px;"><span style="font-size:10px;color:#9A9486;font-family:'Inter',sans-serif;">0</span><span style="font-size:11px;color:#2E5E3A;font-family:'Inter',sans-serif;" id="score-val-${s.id}">${gameState.confScores[s.id]??s.reliability}%</span><span style="font-size:10px;color:#9A9486;font-family:'Inter',sans-serif;">100</span></div></div>`).join('')}
+  <div class="divider"></div><button class="btn" id="next-6" ${!all?'disabled':''}>Continue ↗</button>`;
+  el.querySelectorAll('.conf-slider').forEach(sl=>{sl.addEventListener('input',()=>{const sid=sl.dataset.sid;const v=parseInt(sl.value);const isFirst=gameState.confScores[sid]===undefined;gameState.confScores[sid]=v;const label=el.querySelector('#score-val-'+sid);if(label)label.textContent=v+'%';if(isFirst){const all2=SOURCES_DATA.every(s=>gameState.confScores[s.id]!==undefined);const nb=el.querySelector('#next-6');if(nb)nb.disabled=!all2;if(all2)changeTrust(15,'Rated reliability across all five sources');}});});
+  const nb=el.querySelector('#next-6');if(nb)nb.addEventListener('click',nextPhase);
+}
+
+const SKETCHES={
+  placard:'<svg viewBox="0 0 60 60"><rect x="10" y="8" width="40" height="28" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="30" y1="36" x2="30" y2="52" stroke="#1A1A1A" stroke-width="2"/><line x1="16" y1="16" x2="44" y2="16" stroke="#1A1A1A" stroke-width="1.5"/><line x1="16" y1="22" x2="44" y2="22" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  hanky:'<svg viewBox="0 0 60 60"><path d="M15 15 Q30 10 45 15 L42 40 Q30 48 18 40 Z" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="30" cy="32" r="3" fill="#A8472E" opacity="0.6"/></svg>',
+  helmet:'<svg viewBox="0 0 60 60"><path d="M15 35 Q15 15 30 15 Q45 15 45 35 L45 38 L15 38 Z" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="12" y1="38" x2="48" y2="38" stroke="#1A1A1A" stroke-width="2"/></svg>',
+  saville:'<svg viewBox="0 0 60 60"><rect x="14" y="8" width="32" height="44" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="20" y1="18" x2="40" y2="18" stroke="#1A1A1A" stroke-width="1.5"/><line x1="20" y1="24" x2="40" y2="24" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  radio:'<svg viewBox="0 0 60 60"><rect x="10" y="22" width="40" height="22" rx="2" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="20" cy="33" r="5" fill="none" stroke="#1A1A1A" stroke-width="1.5"/><line x1="42" y1="22" x2="46" y2="10" stroke="#1A1A1A" stroke-width="2"/></svg>',
+  mural:'<svg viewBox="0 0 60 60"><rect x="8" y="8" width="44" height="38" fill="none" stroke="#1A1A1A" stroke-width="2"/><path d="M14 38 L24 24 L32 32 L40 18 L46 38" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  banner:'<svg viewBox="0 0 60 60"><line x1="10" y1="14" x2="10" y2="50" stroke="#1A1A1A" stroke-width="2"/><line x1="50" y1="14" x2="50" y2="50" stroke="#1A1A1A" stroke-width="2"/><path d="M10 18 L50 18 L50 30 L10 30 Z" fill="none" stroke="#1A1A1A" stroke-width="2"/></svg>',
+  telegraph:'<svg viewBox="0 0 60 60"><rect x="10" y="8" width="40" height="46" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="15" y1="16" x2="45" y2="16" stroke="#1A1A1A" stroke-width="2"/><line x1="15" y1="24" x2="45" y2="24" stroke="#1A1A1A" stroke-width="1"/></svg>',
+  irishpress:'<svg viewBox="0 0 60 60"><rect x="10" y="8" width="40" height="46" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="15" y1="16" x2="45" y2="16" stroke="#1A1A1A" stroke-width="2"/><line x1="15" y1="24" x2="45" y2="24" stroke="#1A1A1A" stroke-width="1"/></svg>',
+  widgery:'<svg viewBox="0 0 60 60"><circle cx="30" cy="26" r="16" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="30" y1="42" x2="30" y2="50" stroke="#1A1A1A" stroke-width="2"/></svg>',
+  cartridge:'<svg viewBox="0 0 60 60"><rect x="26" y="12" width="8" height="30" rx="2" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="30" cy="46" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  daly_photo:'<svg viewBox="0 0 60 60"><rect x="10" y="10" width="40" height="32" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="24" cy="26" r="5" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  victims:'<svg viewBox="0 0 60 60"><rect x="14" y="14" width="32" height="20" rx="2" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="22" cy="24" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  letter:'<svg viewBox="0 0 60 60"><rect x="10" y="16" width="40" height="28" fill="none" stroke="#1A1A1A" stroke-width="2"/><path d="M10 16 L30 32 L50 16" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  map:'<svg viewBox="0 0 60 60"><path d="M10 20 L25 12 L40 20 L50 14 L50 46 L35 52 L20 46 L10 50 Z" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="30" cy="30" r="2" fill="#A8472E"/></svg>',
+  bogside:'<svg viewBox="0 0 60 60"><rect x="8" y="8" width="44" height="38" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="30" cy="28" r="10" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  army_log:'<svg viewBox="0 0 60 60"><rect x="14" y="8" width="32" height="44" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="20" y1="18" x2="40" y2="18" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  first_aid:'<svg viewBox="0 0 60 60"><rect x="14" y="14" width="32" height="32" rx="3" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="30" y1="22" x2="30" y2="38" stroke="#A8472E" stroke-width="3"/><line x1="22" y1="30" x2="38" y2="30" stroke="#A8472E" stroke-width="3"/></svg>',
+  inquiry_photo:'<svg viewBox="0 0 60 60"><rect x="10" y="10" width="40" height="32" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="24" cy="26" r="5" fill="none" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  family_oral:'<svg viewBox="0 0 60 60"><rect x="20" y="14" width="20" height="26" rx="10" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="30" y1="40" x2="30" y2="48" stroke="#1A1A1A" stroke-width="2"/></svg>',
+  amnesty:'<svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="20" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="14" y1="30" x2="46" y2="30" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  song:'<svg viewBox="0 0 60 60"><circle cx="22" cy="42" r="6" fill="none" stroke="#1A1A1A" stroke-width="2"/><circle cx="42" cy="38" r="6" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="28" y1="42" x2="28" y2="14" stroke="#1A1A1A" stroke-width="2"/><line x1="48" y1="38" x2="48" y2="10" stroke="#1A1A1A" stroke-width="2"/></svg>',
+  commons:'<svg viewBox="0 0 60 60"><rect x="12" y="12" width="36" height="36" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="18" y1="20" x2="42" y2="20" stroke="#1A1A1A" stroke-width="1.5"/></svg>',
+  torn_photo:'<svg viewBox="0 0 60 60"><path d="M10 10 L32 10 L28 28 L48 24 L48 48 L10 48 Z" fill="none" stroke="#1A1A1A" stroke-width="2"/><line x1="32" y1="10" x2="28" y2="28" stroke="#A8472E" stroke-width="1" stroke-dasharray="2,2"/></svg>',
+  timeline_doc:'<svg viewBox="0 0 60 60"><line x1="10" y1="30" x2="50" y2="30" stroke="#1A1A1A" stroke-width="2"/><circle cx="18" cy="30" r="3" fill="#1A1A1A"/><circle cx="30" cy="30" r="3" fill="#1A1A1A"/><circle cx="42" cy="30" r="3" fill="#1A1A1A"/></svg>'
+};
+function getSketch(id){return SKETCHES[id]||'<svg viewBox="0 0 60 60"><rect x="14" y="14" width="32" height="32" fill="none" stroke="#1A1A1A" stroke-width="2"/></svg>';}
+
+function renderChoices(){
+  const el=document.getElementById('phase-content');
+  const selArts=ARTIFACTS.filter(a=>gameState.selectedArtifacts.has(a.id));
+  const outcome=EXHIBIT_OUTCOMES[gameState.narrativeChoice||'C'];
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 7 — Your choices</p><h2>A visual record of your exhibition</h2><p class="sub">A simple sketch of every artifact you chose to include before opening day.</p></div>
+  <div class="card"><h3>${outcome.name}: ${outcome.sub}</h3><p class="sub">${selArts.length} artifacts selected · public trust currently ${Math.round(trust)}/100</p></div>
+  <div class="sketch-grid">${selArts.map(a=>`<div class="sketch-card"><div class="sketch-svg">${getSketch(a.id)}</div><p style="font-size:11px;font-family:'Inter',sans-serif;font-weight:500;color:#1A1A1A;margin:0;">${a.name}</p></div>`).join('')}</div>
+  <div class="divider"></div><button class="btn" id="next-7">Proceed to opening day ↗</button>`;
+  el.querySelector('#next-7').addEventListener('click',nextPhase);
+}
+
+function renderOpening(){
+  const el=document.getElementById('phase-content');
+  const outcome=EXHIBIT_OUTCOMES[gameState.narrativeChoice||'C'];
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 8 — Opening day</p><h2>${outcome.name}: ${outcome.sub}</h2><p class="sub" style="margin-bottom:.6rem;">${outcome.desc}</p><div style="display:flex;align-items:center;gap:8px;padding:.6rem;background:rgba(0,0,0,0.03);border-radius:7px;margin-bottom:.4rem;"><i class="ti ti-users" style="font-size:18px;color:#6B6B6B;" aria-hidden="true"></i><span style="font-size:13px;font-family:'Inter',sans-serif;color:#444;">Public trust at opening: <strong style="color:#1A1A1A;">${Math.round(trust)} / 100</strong></span></div></div>
+  <h3 style="margin:.6rem 0 .4rem;">Media reviews</h3>${outcome.reviews.map(r=>`<div class="visitor-card review-${r.type}"><p style="font-size:11px;font-family:'Inter',sans-serif;color:#6B6B6B;margin-bottom:3px;">${r.who}</p><p class="src-quote" style="border:none;padding:0;font-size:13px;">"${r.text}"</p></div>`).join('')}
+  <h3 style="margin:.8rem 0 .4rem;">Visitor reactions</h3><div class="visitor-card review-${trust>=65?'pos':trust>=40?'neu':'neg'}"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;">${trust>=70?'Visitors are leaving moved and informed. A survivor\'s family thanks you personally.':trust>=50?'Mixed reactions. Some question why certain perspectives are under-represented.':'Controversy has broken out. Families are frustrated.'}</p></div>
+  ${trust<50?`<div class="card" style="border-color:#A8472E;margin-top:6px;"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#A8472E;"><i class="ti ti-alert-triangle" style="font-size:14px;vertical-align:-2px;" aria-hidden="true"></i> Low trust warning.</p></div>`:''}
+  <div class="divider"></div><button class="btn" id="next-8">Proceed to new evidence ↗</button>`;
+  el.querySelector('#next-8').addEventListener('click',nextPhase);
+}
+
+function getCuratorTitle(){
+  const correctPlacements=Object.entries(gameState.puzzlePlaced).filter(([k,v])=>parseInt(k)===v).length;
+  const revised=gameState.newEvidenceChoice==='revise';
+  const ignored=gameState.newEvidenceChoice==='ignore';
+  if(trust>=80&&revised) return {title:'The Honest Broker',icon:'ti-shield-check',desc:'You acknowledged uncertainty at every turn, weighed sources on their merits, and revised your exhibition the moment new evidence demanded it. Visitors trust you because you earned it.'};
+  if(correctPlacements===9&&trust>=60) return {title:'The Restorer',icon:'ti-photo-scan',desc:'Patient, exact, and unwilling to guess — you rebuilt the photograph fragment by fragment until it matched reality precisely, and carried that same precision into your curation.'};
+  if(ignored&&trust<40) return {title:'The Discredited Curator',icon:'ti-alert-triangle',desc:'You let convenience override evidence one too many times. By the time new evidence surfaced, you chose silence over revision — and the public noticed.'};
+  if(trust>=65) return {title:'The Careful Custodian',icon:'ti-bookmark',desc:'You handled contested material with consistent care, balancing competing accounts without flattening their differences.'};
+  if(trust<45) return {title:'The Hurried Storyteller',icon:'ti-run',desc:'Your exhibition favours a clean narrative over a complete one. It moves visitors — but it may also mislead them.'};
+  return {title:'The Working Curator',icon:'ti-building-monument',desc:'A solid, workmanlike exhibition — neither exemplary nor reckless. There was room for more care, and room for less.'};
+}
+
+function renderNewEvidence(){
+  const el=document.getElementById('phase-content');
+  el.innerHTML=`<div class="card card-accent"><p class="eyebrow">Phase 9 — New evidence surfaces</p><h2>A declassified document has been released</h2><p class="sub">A previously secret intelligence file contradicts the army's account in ways not considered in your exhibition. What do you do?</p></div>
+  <div class="card" style="border-color:#A87D2E;"><p style="font-size:11px;font-family:'Inter',sans-serif;color:#A87D2E;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;">Newly declassified — Cabinet Office, 1972</p><p class="src-quote">"Ministers were advised within 48 hours of the shootings that the army's account was unlikely to withstand scrutiny. The decision to commission the Widgery Tribunal — rather than a full independent inquiry — was taken to limit political damage."</p></div>
+  <h3 style="margin:.7rem 0 .4rem;">How do you respond?</h3>
+  <div class="exhibit-option ${gameState.newEvidenceChoice==='revise'?'chosen':''}" data-nec="revise"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;margin-bottom:3px;">Revise the exhibition to incorporate the new document.</p><p class="sub">Takes time, but maintains credibility. Earns significant trust.</p></div>
+  <div class="exhibit-option ${gameState.newEvidenceChoice==='note'?'chosen':''}" data-nec="note"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;margin-bottom:3px;">Add a notice flagging the new evidence.</p><p class="sub">Transparent and practical. Moderate trust gain.</p></div>
+  <div class="exhibit-option ${gameState.newEvidenceChoice==='ignore'?'chosen':''}" data-nec="ignore"><p style="font-size:13px;font-family:'Inter',sans-serif;color:#333;margin-bottom:3px;">Leave the exhibition unchanged.</p><p class="sub">Easiest option. Risks appearing to hide evidence.</p></div>
+  ${gameState.newEvidenceChoice?`<div class="divider"></div><div class="title-card"><i class="ti ${getCuratorTitle().icon}" style="font-size:32px;color:#2E5E3A;" aria-hidden="true"></i><p style="font-size:11px;font-family:'Inter',sans-serif;color:#6B6B6B;text-transform:uppercase;letter-spacing:.08em;margin-top:6px;">Your final title</p><p class="title-name">${getCuratorTitle().title}</p><p class="sub" style="max-width:420px;margin:6px auto 0;">${getCuratorTitle().desc}</p><p style="font-size:13px;font-family:'Inter',sans-serif;color:#1A1A1A;margin-top:10px;font-weight:600;">Final public trust: ${Math.round(trust)} / 100</p></div>${renderBadges()}<div class="divider"></div><button class="btn" style="margin-top:4px;" onclick="sendPrompt('I finished curating the Bloody Sunday exhibition and earned the title &quot;${getCuratorTitle().title}&quot; with a final public trust score of ${Math.round(trust)}/100. I chose exhibition ${gameState.narrativeChoice} and responded to new evidence by choosing to ${gameState.newEvidenceChoice}. What does this pattern of choices say about my approach to contested historical memory?')">Reflect on your curation ↗</button>`:''}`;
+  el.querySelectorAll('.exhibit-option[data-nec]').forEach(opt=>{opt.addEventListener('click',()=>{const choice=opt.dataset.nec;if(gameState.newEvidenceChoice)return;gameState.newEvidenceChoice=choice;if(choice==='revise'){changeTrust(20,'Revised the exhibition when new evidence emerged — exemplary practice');}else if(choice==='note'){changeTrust(10,'Flagged new evidence transparently');}else{changeTrust(-20,'Ignored new evidence — visitors and critics will notice');}renderNewEvidence();});});
+}
+
+function renderBadges(){
+  const correctPlacements=Object.entries(gameState.puzzlePlaced).filter(([k,v])=>parseInt(k)===v).length;
+  const badges=[
+    {icon:'ti-book',name:'Careful reader',earned:gameState.readSources.size>=4},
+    {icon:'ti-search',name:'Contradiction hunter',earned:gameState.resolvedContradictions.size>=3},
+    {icon:'ti-photo-scan',name:'Restorer',earned:correctPlacements===9},
+    {icon:'ti-building-monument',name:'Master curator',earned:gameState.selectedArtifacts.size>=8},
+    {icon:'ti-shield-check',name:'Honest broker',earned:trust>=70},
+    {icon:'ti-refresh',name:'Evidence-led',earned:gameState.newEvidenceChoice==='revise'}
+  ];
+  return `<p style="font-size:11px;color:#6B6B6B;font-family:'Inter',sans-serif;margin:0 0 8px;text-transform:uppercase;letter-spacing:.06em;">Badges earned</p><div class="badge-grid">${badges.map(b=>`<div class="badge ${b.earned?'earned':''}"><i class="ti ${b.icon}" aria-hidden="true"></i><p class="badge-name">${b.name}</p></div>`).join('')}</div>`;
+}
+
+renderPhase();
+
+let actx=null,playing=false;
+function buildAudio(){
+  actx=new(window.AudioContext||window.webkitAudioContext)();
+  const master=actx.createGain();master.gain.value=0.22;master.connect(actx.destination);
+  function drone(f,v){const o=actx.createOscillator();o.type='triangle';o.frequency.value=f;const g=actx.createGain();g.gain.value=v;const lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=350;o.connect(lp);lp.connect(g);g.connect(master);o.start();}
+  drone(55,.15);drone(82.4,.08);
+  const buf=actx.createBuffer(1,actx.sampleRate*4,actx.sampleRate);
+  const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.1;
+  const ns=actx.createBufferSource();ns.buffer=buf;ns.loop=true;
+  const bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=900;bp.Q.value=.5;
+  const ng=actx.createGain();ng.gain.value=.3;ns.connect(bp);bp.connect(ng);ng.connect(master);ns.start();
+  const SCALE=[0,2,3,5,7,9,10];const BASE=60;const mel=[0,2,3,5,7,5,3,2,0,3,5,7,9,7,5,3,7,5,3,0];
+  const mg=actx.createGain();mg.gain.value=.18;mg.connect(master);
+  const TEMPO=.44;let t=actx.currentTime+.5;
+  function sched(){mel.forEach((n,i)=>{const freq=440*Math.pow(2,(BASE+SCALE[n%7]+Math.floor(n/7)*12-69)/12);const o=actx.createOscillator();o.type='triangle';o.frequency.value=freq;const env=actx.createGain();env.gain.setValueAtTime(0,t+i*TEMPO);env.gain.linearRampToValueAtTime(.8,t+i*TEMPO+.02);env.gain.setValueAtTime(.8,t+i*TEMPO+TEMPO*.6);env.gain.linearRampToValueAtTime(0,t+i*TEMPO+TEMPO*.88);o.connect(env);env.connect(mg);o.start(t+i*TEMPO);o.stop(t+i*TEMPO+TEMPO);});t+=mel.length*TEMPO+TEMPO*2;if(playing)setTimeout(sched,(mel.length*TEMPO+.5)*1000);}
+  sched();
+}
+document.getElementById('snd-btn').addEventListener('click',()=>{
+  if(!playing){if(!actx)buildAudio();else actx.resume();document.getElementById('snd-icon').className='ti ti-player-pause';document.getElementById('slabel').textContent='D Dorian folk air playing…';playing=true;}
+  else{actx.suspend();document.getElementById('snd-icon').className='ti ti-player-play';document.getElementById('slabel').textContent='Folk air — click to play';playing=false;}
+});
+</script>
